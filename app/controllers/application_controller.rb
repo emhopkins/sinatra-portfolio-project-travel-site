@@ -5,7 +5,7 @@ class ApplicationController < Sinatra::Base
  	configure do
 	    set :public_folder, 'public'
 	    set :views, 'app/views'
-	    enable :sessions
+	    set :sessions, true
 		set :session_secret, "password_security"
 	end
 
@@ -21,7 +21,7 @@ class ApplicationController < Sinatra::Base
 	    if !params[:username].empty? && !params[:email].empty? && !params[:password].empty?
 	    	user = User.create(:username => params[:username], :email => params[:email], :password => params[:password])
 	    	session[:user_id] = user.id
-	    	redirect "homepage"
+	    	redirect "/home"
 		else
 	    	redirect "/signup"
 		end
@@ -36,7 +36,7 @@ class ApplicationController < Sinatra::Base
 		user = User.find_by(:username => params[:username])
 	    if user && user.authenticate(params[:password])
 	        session[:user_id] = user.id
-	        redirect "homepage"
+	        redirect "/home"
 	    else
 	        redirect "/login"
 	    end
@@ -45,6 +45,11 @@ class ApplicationController < Sinatra::Base
 	get "/logout" do
 		session.clear
 		redirect "/login"
+	end
+
+	get "/home" do
+		@users = User.all
+		erb :home
 	end
 
 
