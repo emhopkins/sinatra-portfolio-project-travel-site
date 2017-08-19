@@ -1,1 +1,14 @@
-<h1>Welcome, <%=current_user.username%>!</h1>
+<% if !logged_in? %>
+	<% redirect '/login' %>
+<%end%>
+<h1>Elena's Travel Site</h1>
+<% if logged_in? %>
+	<h2>Welcome, <%= current_user.username %>! <a href="/logout">Logout</a></h2>
+	<h3>Select a destination to view its activities or add a <a href="/destinations/new">new destination</a>.</h3>
+	<h3>All destinations:</h3>
+	<ul>
+  		<%@destinations.each do |destination|%>
+  		<li><a href=""><%=destination.name%></a></li>
+  		<%end%>
+	</ul>
+<%end%>

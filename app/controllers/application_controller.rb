@@ -48,7 +48,7 @@ class ApplicationController < Sinatra::Base
 	end
 
 	get "/home" do
-		@users = User.all
+		@destinations = Destination.all
 		erb :home
 	end
 
