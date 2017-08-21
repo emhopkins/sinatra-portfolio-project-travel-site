@@ -52,6 +52,9 @@ class ApplicationController < Sinatra::Base
 		erb :home
 	end
 
+	get "/destinations/new" do
+		erb :'destinations/new'
+	end
 
     # get "/users/:slug" do 
     # 	erb :'/users/show'
