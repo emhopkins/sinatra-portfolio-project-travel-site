@@ -1,0 +1,28 @@
+<h1>Update Destination</h1>
+<form action="/destinations/<%=@destination.id%>" method="POST">
+  <label>Name:</label>
+ 
+  <br></br>
+ 
+  <input type="text" name="destination[name]" id="destination_name" value="<%=@destination.name%>">
+ 
+  <br></br>
+ 
+  <label>Choose an existing activity:</label>
+ 
+  <br></br>
+ 
+  <%Activity.all.each do |activity|%>
+    <input type="checkbox" name="destination[activity_ids][]" id="activity_<%=activity.id%>" value="<%=activity.id%>"<%= 'checked' if @destination.activities.include?(activity) %>><%=activity.name%></input>
+  <%end%>
+ 
+  <br></br>
+ 
+    <label>and/or, create a new activity:</label>
+    <br></br>
+    <label>name:</label>
+      <input  type="text" name="activity[name]" id="new_activity"></input>
+    <br></br>
+
+  <input type="submit" value="Edit Destination">
+</form>

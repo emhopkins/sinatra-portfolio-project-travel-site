@@ -56,6 +56,34 @@ class ApplicationController < Sinatra::Base
 		erb :'destinations/new'
 	end
 
+	post '/destinations' do 
+		@destination = Destination.create(params[:destination])
+		if !params["activity"]["name"].empty?
+		  @destination.activities << Activity.find_or_create_by(name: params["activity"]["name"])
+		end
+		@destination.save
+		redirect to "destinations/#{@destination.id}"
+	end
+
+	get '/destinations/:id/edit' do 
+		@destination = Destination.find(params[:id])
+		erb :'/destinations/edit'
+	end
+
+	get '/destinations/:id' do 
+		@destination = Destination.find(params[:id])
+		erb :'/destinations/show'
+	end
+
+	post '/destinations/:id' do 
+		@destination = Destination.find(params[:id])
+		@destination.update(params["destination"])
+		if !params["activity"]["name"].empty?
+		  @destination.activities << Activity.find_or_create_by(name: params["activity"]["name"])
+		end
+		redirect to "destinations/#{@destination.id}"
+	end
+
     # get "/users/:slug" do 
     # 	erb :'/users/show'
     # end
