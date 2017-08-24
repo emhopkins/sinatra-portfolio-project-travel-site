@@ -2,7 +2,7 @@
 
 ## Usage
 
-After cloning the repo, run bundle to install dependencies. To migrate your local database, run rake db:migrate. To start the application on your machine, run 'shotgun'
+After cloning the repo, run bundle to install dependencies. To migrate your local database, run rake db:migrate. To start the application on your machine, run 'shotgun'.  In a browser, go to http://localhost:9393/ to begin (Note: if you are using a different port, change 9393 where applicable).
 
 ## Contributing
 
