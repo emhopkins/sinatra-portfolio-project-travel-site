@@ -1,3 +1,6 @@
+<% if !logged_in? %>
+	<% redirect '/login' %>
+<%end%>
 <h1>Create a new destination</h1>
 <form action="/destinations" method="POST">
   <label>Name: </label><input type="text" name="destination[name]" id="destination_name">

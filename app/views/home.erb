@@ -8,7 +8,7 @@
 	<h3>All destinations:</h3>
 	<ul>
   		<%@destinations.each do |destination|%>
-  		<li><a href=""><%=destination.name%></a></li>
+  		<li><a href="/destinations/<%=destination.id%>"><%=destination.name%></a></li>
   		<%end%>
 	</ul>
 <%end%>

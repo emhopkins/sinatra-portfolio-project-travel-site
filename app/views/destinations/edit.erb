@@ -1,3 +1,9 @@
+<% if !logged_in? %>
+  <% redirect '/login' %>
+<%end%>
+<% if @destination.user != current_user %>
+  <% redirect "/destinations/#{@destination.id}" %>
+<%end%>
 <h1>Update Destination</h1>
 <form action="/destinations/<%=@destination.id%>" method="POST">
   <label>Name:</label>
@@ -24,5 +30,5 @@
       <input  type="text" name="activity[name]" id="new_activity"></input>
     <br></br>
 
-  <input type="submit" value="Edit Destination">
+  <input type="submit" value="Update Destination">
 </form>

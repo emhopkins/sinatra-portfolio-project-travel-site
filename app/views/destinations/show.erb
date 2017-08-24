@@ -1,4 +1,11 @@
+<% if !logged_in? %>
+	<% redirect '/login' %>
+<%end%>
 <h1><%=@destination.name%></h1>
+<a href="/home">Home</a>
+<% if @destination.user == current_user %>
+	<a href="/destinations/<%=@destination.id%>/edit">Edit Activity</a>
+<% end %>
 <h4>Activities:</h4>
 <ul>
   <%@destination.activities.each do |activity|%>

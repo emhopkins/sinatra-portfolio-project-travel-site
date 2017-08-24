@@ -61,6 +61,7 @@ class ApplicationController < Sinatra::Base
 		if !params["activity"]["name"].empty?
 		  @destination.activities << Activity.find_or_create_by(name: params["activity"]["name"])
 		end
+		@destination.user = current_user
 		@destination.save
 		redirect to "destinations/#{@destination.id}"
 	end
