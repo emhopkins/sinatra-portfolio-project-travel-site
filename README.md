@@ -6,7 +6,7 @@ After cloning the repo, run bundle to install dependencies. To migrate your loca
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/emhopkins/office-quote-cli-app. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
+Bug reports and pull requests are welcome on GitHub at https://github.com/emhopkins/sinatra-portfolio-project-travel-site. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](contributor-covenant.org) code of conduct.
 
 
 ## License
