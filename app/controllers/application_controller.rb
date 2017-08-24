@@ -1,4 +1,5 @@
 require './config/environment'
+require 'rack-flash'
 
 class ApplicationController < Sinatra::Base
 
@@ -7,6 +8,7 @@ class ApplicationController < Sinatra::Base
 	    set :views, 'app/views'
 	    set :sessions, true
 		set :session_secret, "password_security"
+		use Rack::Flash
 	end
 
 	get "/" do
@@ -23,6 +25,7 @@ class ApplicationController < Sinatra::Base
 	    	session[:user_id] = user.id
 	    	redirect "/home"
 		else
+			flash[:message] = "You must enter a username, email and password to signup."
 	    	redirect "/signup"
 		end
 	end
@@ -57,13 +60,18 @@ class ApplicationController < Sinatra::Base
 	end
 
 	post '/destinations' do 
-		@destination = Destination.create(params[:destination])
-		if !params["activity"]["name"].empty?
-		  @destination.activities << Activity.find_or_create_by(name: params["activity"]["name"])
-		end
-		@destination.user = current_user
-		@destination.save
-		redirect to "destinations/#{@destination.id}"
+	    if !params["destination"]["name"].empty? 
+			@destination = Destination.create(params[:destination])
+			if !params["activity"]["name"].empty?
+			  @destination.activities << Activity.find_or_create_by(name: params["activity"]["name"])
+			end
+			@destination.user = current_user
+			@destination.save
+			redirect to "destinations/#{@destination.id}"
+		else
+			flash[:message] = "A destination name is required"
+	    	redirect "/destinations/new"
+	    end
 	end
 
 	get '/destinations/:id/edit' do 
@@ -78,16 +86,17 @@ class ApplicationController < Sinatra::Base
 
 	post '/destinations/:id' do 
 		@destination = Destination.find(params[:id])
-		@destination.update(params["destination"])
-		if !params["activity"]["name"].empty?
-		  @destination.activities << Activity.find_or_create_by(name: params["activity"]["name"])
-		end
-		redirect to "destinations/#{@destination.id}"
+		if !params["destination"]["name"].empty? 
+			@destination.update(params["destination"])
+			if !params["activity"]["name"].empty?
+			  @destination.activities << Activity.find_or_create_by(name: params["activity"]["name"])
+			end
+			redirect "/destinations/#{@destination.id}"
+		else 
+			flash[:message] = "Destination name cannot be empty"
+	    	redirect "/destinations/#{@destination.id}/edit"
+	    end
 	end
-
-    # get "/users/:slug" do 
-    # 	erb :'/users/show'
-    # end
 
 	helpers do
 		def logged_in?

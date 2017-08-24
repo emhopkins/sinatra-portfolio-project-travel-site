@@ -1,3 +1,6 @@
+<% if flash.has?(:message) %>
+  <%= flash[:message] %>
+<% end %>
 <% if logged_in? %>
 	<% redirect '/home' %>
 <%end%>
