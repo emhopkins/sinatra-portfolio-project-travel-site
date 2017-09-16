@@ -20,12 +20,13 @@ class ApplicationController < Sinatra::Base
 	end
 
 	post "/signup" do
-	    if !params[:username].empty? && !params[:email].empty? && !params[:password].empty?
-	    	user = User.create(:username => params[:username], :email => params[:email], :password => params[:password])
+	    # if !params[:username].empty? && !params[:email].empty? && !params[:password].empty?
+	    user = User.new(:username => params[:username], :email => params[:email], :password => params[:password])
+	    if user.save
 	    	session[:user_id] = user.id
 	    	redirect "/home"
 		else
-			flash[:message] = "You must enter a username, email and password to signup."
+			flash[:message] = user.errors.full_messages.join(', ')
 	    	redirect "/signup"
 		end
 	end
@@ -96,6 +97,18 @@ class ApplicationController < Sinatra::Base
 			flash[:message] = "Destination name cannot be empty"
 	    	redirect "/destinations/#{@destination.id}/edit"
 	    end
+	end
+
+	delete '/destinations/:id' do  
+		# binding.pry
+		@destination = Destination.find(params[:id])
+		if current_user = @destination.user
+			@destination.destroy
+		else
+			flash[:message] = "You cannot delete destinations you did not create"
+		end
+		redirect "/home"
+
 	end
 
 	helpers do

@@ -5,6 +5,10 @@
 <a href="/home">Home</a>
 <% if @destination.user == current_user %>
 	<a href="/destinations/<%=@destination.id%>/edit">Edit Destination</a>
+	<form action="/destinations/<%=@destination.id%>" method="POST">
+		<input type="hidden" name="_method" value="delete">
+		<input type="submit" value="Delete Destination">
+	</form>
 <% end %>
 <h4>Activities:</h4>
 <ul>
